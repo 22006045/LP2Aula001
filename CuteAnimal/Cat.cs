@@ -1,15 +1,37 @@
+using System;
+
 namespace CuteAnimal
 {
     public class Cat
     {
-        private readonly string name ;
-        private int energy;
         private Feed feed;
         private Mood mood;
+        private readonly Random random; 
 
-        public Cat(string name)
+        public int Energy{get ; private set;}
+        public string Name{get ;}
+
+
+        private Cat()
         {
-            this.name = name;
+            random = new Random();
+        
+        }
+        
+        public Cat(int energy, Feed feed, Mood mood) : this()
+        {
+            Energy = energy;
+            this.feed = feed;
+            this.mood = mood;
+        }
+
+        public Cat(string name) : this()
+        {
+            Name = name;
+            Energy = random.Next(1,6);
+            feed = (Feed)random.Next((int)Feed.AboutToExplode + 1);
+            mood = (Mood)random.Next((int)Mood.HyperActive + 1);
+
         }
 
         public void Eat()
@@ -20,7 +42,8 @@ namespace CuteAnimal
 
         public void Sleep()
         {
-            energy++;
+            mood = (Mood)random.Next((int)Mood.HyperActive + 1);
+            Energy++;
 
             if (feed > Feed.Starving)
                 feed--;
@@ -36,8 +59,6 @@ namespace CuteAnimal
             if (mood < Mood.HyperActive)
                 mood++;
         }
-
-    
     }
 
 
